@@ -1,0 +1,17 @@
+<% if logged_in? %>
+  <p>ログイン完了ユーザ: <%= current_user.name %></p>
+<% else %>
+  redirect_to : sessions_new_path
+<% end %> 
+
+
+
+<h1>タスク一覧</h1>
+
+<ul>
+  <% @tasks.each do |task| %>
+    <li><%= link_to task.id, task %> : <%= task.content %> &gt; <%= task.status %></li>
+  <% end %>
+</ul>
+
+<%= link_to '新規タスクの投稿', new_task_path %>
