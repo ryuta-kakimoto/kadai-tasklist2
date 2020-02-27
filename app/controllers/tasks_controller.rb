@@ -27,8 +27,6 @@ class TasksController < ApplicationController
   end
 
   def edit
-    #消せる
-    @task = Task.find(params[:id])
   end
 
   def update
@@ -59,9 +57,11 @@ class TasksController < ApplicationController
     params.require(:task).permit(:content, :status)
   end
 
-  def correct_user #find_task
-    @task = current_user.tasks.find_by(id: params[:id])
-    # @task = Task.find(params[:id])。
-
+  def correct_user
+    @task = Task.find_by(id:params[:id])
+    if @task.user_id != @current_user.id
+      flash[:notice]= 'お引き取りください'
+      redirect_to root_url
+    end
   end
 end
